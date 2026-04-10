@@ -85,7 +85,7 @@ Total: **4,750 labeled training images** across 12 classes.
 Run the Jupyter notebook:
 
 ```bash
-jupyter notebook "computer vision.ipynb"
+jupyter notebook computer_vision.ipynb
 ```
 
 The notebook loads raw PNG images directly from the folder structure — no preprocessing scripts needed.
@@ -103,7 +103,7 @@ This starts a local web app where you can upload a plant seedling image and get 
 ## Project Structure
 
 ```
-├── computer vision.ipynb   # Training notebook
+├── computer_vision.ipynb   # Training notebook (with Colab outputs)
 ├── app.py                  # Gradio demo application
 ├── Labels.csv              # Dataset labels reference
 ├── requirements.txt        # Python dependencies

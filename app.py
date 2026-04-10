@@ -1,13 +1,64 @@
 import os
+import json
+import zipfile
+import tempfile
+import shutil
+
 import cv2
 import numpy as np
 import gradio as gr
 import tensorflow as tf
+from tensorflow.keras import models, layers
 
 MODEL_PATH = os.path.join("model", "plant_seedling_model.keras")
 CLASS_NAMES_PATH = os.path.join("model", "class_names.npy")
 
-model = tf.keras.models.load_model(MODEL_PATH)
+IMG_SIZE = 128
+NUM_CLASSES = 12
+
+
+def build_model():
+    m = models.Sequential([
+        layers.Input(shape=(IMG_SIZE, IMG_SIZE, 3)),
+        layers.Conv2D(32, (5, 5), padding="same", activation="relu"),
+        layers.BatchNormalization(),
+        layers.MaxPooling2D((2, 2)),
+        layers.Dropout(0.2),
+        layers.Conv2D(64, (5, 5), padding="same", activation="relu"),
+        layers.BatchNormalization(),
+        layers.MaxPooling2D((2, 2)),
+        layers.Dropout(0.3),
+        layers.Conv2D(64, (3, 3), padding="same", activation="relu"),
+        layers.BatchNormalization(),
+        layers.MaxPooling2D((2, 2)),
+        layers.Dropout(0.4),
+        layers.Conv2D(64, (3, 3), padding="same", activation="relu"),
+        layers.BatchNormalization(),
+        layers.MaxPooling2D((2, 2)),
+        layers.Dropout(0.5),
+        layers.GlobalMaxPooling2D(),
+        layers.Dense(256, activation="relu"),
+        layers.Dropout(0.5),
+        layers.Dense(NUM_CLASSES, activation="softmax"),
+    ])
+    return m
+
+
+def load_model_weights(model_path):
+    """Load weights from .keras file, bypassing config deserialization issues."""
+    m = build_model()
+    tmp_dir = tempfile.mkdtemp()
+    try:
+        with zipfile.ZipFile(model_path, "r") as zf:
+            zf.extractall(tmp_dir)
+        weights_path = os.path.join(tmp_dir, "model.weights.h5")
+        m.load_weights(weights_path)
+    finally:
+        shutil.rmtree(tmp_dir)
+    return m
+
+
+model = load_model_weights(MODEL_PATH)
 CLASS_NAMES = np.load(CLASS_NAMES_PATH, allow_pickle=True)
 
 
@@ -47,4 +98,4 @@ demo = gr.Interface(
 )
 
 if __name__ == "__main__":
-    demo.launch()
+    demo.launch(server_name="0.0.0.0", server_port=7860)

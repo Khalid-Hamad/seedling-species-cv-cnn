@@ -35,4 +35,5 @@ venv/
 
 # Generated outputs
 submission.csv
+flagged/
 _generate_notebook.py
