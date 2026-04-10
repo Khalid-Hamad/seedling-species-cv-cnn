@@ -1,0 +1,38 @@
+# Data files
+*.npy
+data/
+
+# Model artifacts
+model/
+*.h5
+*.keras
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+dist/
+build/
+.eggs/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Environment
+.env
+.venv/
+env/
+venv/
+
+# Generated outputs
+submission.csv
+_generate_notebook.py
