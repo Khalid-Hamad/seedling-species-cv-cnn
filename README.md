@@ -38,11 +38,16 @@ GlobalMaxPooling2D → Dense(256) → Dropout(0.5) → Dense(12, softmax)
 pip install -r requirements.txt
 ```
 
+## Hugging Face
+
+- **Model:** [Khalid-Hamad/plant-seedlings-classifier](https://huggingface.co/Khalid-Hamad/plant-seedlings-classifier)
+- **Dataset:** [Khalid-Hamad/plant-seedlings-dataset](https://huggingface.co/datasets/Khalid-Hamad/plant-seedlings-dataset)
+
 ## Dataset
 
 The dataset is from the [Plant Seedlings Classification](https://www.kaggle.com/c/plant-seedlings-classification) Kaggle competition, licensed under [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/).
 
-Download from Kaggle and extract into a `data/` directory:
+Download from Kaggle or [Hugging Face](https://huggingface.co/datasets/Khalid-Hamad/plant-seedlings-dataset) and extract into a `data/` directory:
 
 ```bash
 # Option 1: Using Kaggle CLI
